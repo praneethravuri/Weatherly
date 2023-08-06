@@ -3,7 +3,7 @@
     :min-zoom="minZoom" :max-zoom="maxZoom" :street-view-control="streetViewControl" @zoom_changed="zoomChanged"
     @click="mapClicked" />
 
-  <Console :lat="center.lat" :lng="center.lng" />
+  <Console :lat="center.lat" :lng="center.lng" @update-center="updateCenter" />
 </template>
   
 <script>
@@ -41,9 +41,17 @@ export default {
       }
     },
     mapClicked(event) {
-      this.center.lat = event.latLng.lat();
-      this.center.lng = event.latLng.lng();
+      this.center = {
+        ...this.center,
+        lat: event.latLng.lat(),
+        lng: event.latLng.lng(),
+      };
+
       console.log(`Lat: ${this.center.lat} | Lng: ${this.center.lng}`);
+    },
+
+    updateCenter(newCenter) {
+      this.center = { ...newCenter };
     },
   },
   watch: {

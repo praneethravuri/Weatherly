@@ -16,6 +16,8 @@
             <button @click.prevent="reverseGeoCode">Search</button>
         </form>
     </div>
+
+    {{ addressData }}
 </template>
 
 <script>
@@ -35,12 +37,39 @@ export default {
         return {
             inputLat: this.lat,
             inputLng: this.lng,
+            addressData: '',
         };
     },
+    watch: {
+        lat(newValue) {
+            this.inputLat = newValue;
+        },
+        lng(newValue) {
+            this.inputLng = newValue;
+        },
+    },
     methods: {
-        reverseGeoCode() {
+        async reverseGeoCode() {
             const geoCodeURL = `https://geocode.maps.co/reverse?lat=${this.inputLat}&lon=${this.inputLng}`;
             console.log(geoCodeURL);
+
+            try {
+                const response = await fetch(geoCodeURL);
+                this.addressData = await response.json();
+                console.log(JSON.stringify(this.addressData));
+                this.updateCenter();
+
+            }
+            catch (error) {
+                console.log(error);
+            }
+        },
+
+        updateCenter() {
+            this.$emit("update-center", {
+                lat: parseFloat(this.inputLat),
+                lng: parseFloat(this.inputLng),
+            })
         }
     }
 }
