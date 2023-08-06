@@ -46,8 +46,6 @@ export default {
         lat: event.latLng.lat(),
         lng: event.latLng.lng(),
       };
-
-      console.log(`Lat: ${this.center.lat} | Lng: ${this.center.lng}`);
     },
 
     updateCenter(newCenter) {

@@ -15,18 +15,13 @@
         </form>
     </div>
 
-    <Weather :addressData="addressData" />
+    {{ addressData }}
 </template>
 
 <script>
 
-import Weather from './Weather.vue';
-
 export default {
     name: "Console",
-    components: {
-        Weather
-    },
     props: {
         lat: {
             type: Number,
@@ -42,6 +37,8 @@ export default {
             inputLat: this.lat,
             inputLng: this.lng,
             addressData: '',
+            weatherData: '',
+            apiKey: import.meta.env.VITE_OPEN_WEATHER_API_URL,
         };
     },
     watch: {
@@ -55,13 +52,17 @@ export default {
     methods: {
         async reverseGeoCode() {
             const geoCodeURL = `https://geocode.maps.co/reverse?lat=${this.inputLat}&lon=${this.inputLng}`;
-            console.log(geoCodeURL);
 
             try {
                 const response = await fetch(geoCodeURL);
                 this.addressData = await response.json();
-                console.log(JSON.stringify(this.addressData));
-                this.updateCenter();
+                if(!this.addressData.error){
+                    this.updateCenter();
+                    this.getWeatherDetails(this.addressData.address);
+                }
+                else{
+                    console.log("error!!!")
+                }
 
             }
             catch (error) {
@@ -74,6 +75,14 @@ export default {
                 lat: parseFloat(this.inputLat),
                 lng: parseFloat(this.inputLng),
             })
+        },
+
+        getWeatherDetails(address){
+            for(const place in address){
+                let weatherURL = `https://api.openweathermap.org/data/2.5/weather?q=${address[place]}&units=metric&appid=${this.apiKey}`
+                //console.log(address[place]);
+                console.log(weatherURL);
+            }
         }
     }
 }
