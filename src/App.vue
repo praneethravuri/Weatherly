@@ -3,17 +3,19 @@
     :min-zoom="minZoom" :max-zoom="maxZoom" :street-view-control="streetViewControl" @zoom_changed="zoomChanged"
     @click="mapClicked" />
 
-  <SearchDisplay :lat="center.lat" :lng="center.lng" id="search-display" />
+  <Console :lat="center.lat" :lng="center.lng" />
 </template>
   
 <script>
 import { ref } from 'vue';
 import { GoogleMap } from 'vue3-google-map';
+import Console from './components/Console.vue';
 
 export default {
   name: 'App',
   components: {
     GoogleMap,
+    Console
   },
   data() {
     return {
