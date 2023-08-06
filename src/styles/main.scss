@@ -1,6 +1,22 @@
+@import "./_variables";
+
 *{
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    text-decoration: none;
+}
+
+body{
+    background-color: $bg-color-1;
+    color: $text-color;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 1.25rem;
+    letter-spacing: 0.2px;
+}
+
+a{
+    color: $text-color;
 }
 

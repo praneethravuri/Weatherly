@@ -1,4 +1,6 @@
 <template>
+  <About id="about" />
+
   <GoogleMap id="map" ref="mapRef" :api-key="apiKey" :language="language" :region="region" :center="center" :zoom="zoom"
     :min-zoom="minZoom" :max-zoom="maxZoom" :street-view-control="streetViewControl" @zoom_changed="zoomChanged"
     @click="mapClicked" />
@@ -9,13 +11,16 @@
 <script>
 import { ref } from 'vue';
 import { GoogleMap } from 'vue3-google-map';
+
 import Console from './components/Console.vue';
+import About from './components/About.vue';
 
 export default {
   name: 'App',
   components: {
     GoogleMap,
-    Console
+    Console,
+    About
   },
   data() {
     return {
