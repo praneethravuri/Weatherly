@@ -1,6 +1,4 @@
 <template>
-    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat, pariatur.</p>
-
     <div class="lat-lng">
         <form action="">
             <div class="input-lat">
@@ -17,12 +15,18 @@
         </form>
     </div>
 
-    {{ addressData }}
+    <Weather :addressData="addressData" />
 </template>
 
 <script>
+
+import Weather from './Weather.vue';
+
 export default {
     name: "Console",
+    components: {
+        Weather
+    },
     props: {
         lat: {
             type: Number,
