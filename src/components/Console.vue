@@ -15,7 +15,13 @@
         </form>
     </div>
 
-    {{ addressData }}
+    <div v-if="weatherData">
+        <div v-for="weather in weatherData" :key="weather.id">
+            <p>{{ weather }}</p>
+            <br>
+            <br>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -37,7 +43,7 @@ export default {
             inputLat: this.lat,
             inputLng: this.lng,
             addressData: '',
-            weatherData: '',
+            weatherData: [],
             apiKey: import.meta.env.VITE_OPEN_WEATHER_API_URL,
         };
     },
@@ -56,11 +62,11 @@ export default {
             try {
                 const response = await fetch(geoCodeURL);
                 this.addressData = await response.json();
-                if(!this.addressData.error){
+                if (!this.addressData.error) {
                     this.updateCenter();
                     this.getWeatherDetails(this.addressData.address);
                 }
-                else{
+                else {
                     console.log("error!!!")
                 }
 
@@ -77,13 +83,27 @@ export default {
             })
         },
 
-        getWeatherDetails(address){
-            for(const place in address){
-                let weatherURL = `https://api.openweathermap.org/data/2.5/weather?q=${address[place]}&units=metric&appid=${this.apiKey}`
-                //console.log(address[place]);
+        async getWeatherDetails(address) {
+            for (const place in address) {
+                let weatherURL = `https://api.openweathermap.org/data/2.5/weather?q=${address[place]}&units=metric&appid=${this.apiKey}`;
                 console.log(weatherURL);
+
+                try {
+                    const response = await fetch(weatherURL);
+                    const currentPlaceData = await response.json();
+                    console.log(currentPlaceData);
+
+                    if (currentPlaceData.cod === "404") {
+                        console.log("City not found!");
+                    } else {
+                        this.weatherData.push(currentPlaceData);
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
             }
-        }
+        },
+
     }
 }
 </script>
