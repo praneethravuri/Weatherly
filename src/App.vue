@@ -5,7 +5,12 @@
     :min-zoom="minZoom" :max-zoom="maxZoom" :street-view-control="streetViewControl" @zoom_changed="zoomChanged"
     @click="mapClicked" />
 
-  <Console :lat="center.lat" :lng="center.lng" @update-center="updateCenter" />
+  <div class="console">
+    <Console :lat="center.lat" :lng="center.lng" @update-center="updateCenter" id="console" />
+  </div>
+
+  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam, excepturi.</p>
+
 </template>
   
 <script>
@@ -70,6 +75,8 @@ export default {
 </script>
   
 <style lang="scss">
+@import "./styles/_variables.scss";
+
 html,
 body,
 #app,
@@ -79,6 +86,26 @@ body,
 
 body {
   margin: 0;
+}
+
+#map {
+  width: 72%;
+  float: right;
+  margin: 10px;
+  border: 2px solid $bg-color-2;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.console {
+  width: 25%;
+  margin: 10px;
+  padding: 10px;
+  float: left;
+  border: 2px solid $bg-color-2;
+  border-radius: 8px;
+  height: 100%;
+  overflow-y: auto;
 }
 </style>
   

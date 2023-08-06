@@ -63,13 +63,10 @@ export default {
     p {
         font-weight: 900;
         font-size: 4.75rem;
-        line-height: 1.5;
-        letter-spacing: -1.5px;
-        background: linear-gradient(to top right, $gradient-color-1, $gradient-color-2);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
     }
 }
+
+
 
 .link-btn {
     margin: 10px;
@@ -89,12 +86,17 @@ export default {
         margin: 10px 20px;
         line-height: 1.5;
         letter-spacing: -1.5px;
-        background: linear-gradient(to top right, $gradient-color-1, $gradient-color-2);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
         font-weight: 600;
-        transition: $transition;
     }
+}
+
+.heading p,
+.tags p {
+    line-height: 1.5;
+    letter-spacing: -1.5px;
+    background: linear-gradient(to top right, $gradient-color-1, $gradient-color-2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 </style>
   
