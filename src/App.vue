@@ -92,7 +92,6 @@ body {
   width: 72%;
   float: right;
   margin: 10px;
-  border: 2px solid $bg-color-2;
   border-radius: 8px;
   padding: 10px;
 }
@@ -102,7 +101,6 @@ body {
   margin: 10px;
   padding: 10px;
   float: left;
-  border: 2px solid $bg-color-2;
   border-radius: 8px;
   height: 100%;
   overflow-y: auto;
