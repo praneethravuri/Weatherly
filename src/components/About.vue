@@ -10,8 +10,8 @@
         </div>
 
         <div class="links align-center">
-            <a href="https://github.com/praneethravuri/weatherly" target="_blank" class="link-btn">Github</a>
-            <a href="" class="link-btn" v-scroll-to="'#map'">Get Started</a>
+            <Button name="Github" :link="githubLink" target="_blank" />
+            <Button name="Get Started" v-scroll-to="'#map'" />
         </div>
 
         <div class="tags">
@@ -23,11 +23,18 @@
 </template>
   
 <script>
+
+import Button from './Button.vue';
+
 export default {
     name: "About",
+    components: {
+        Button
+    },
     data() {
         return {
             tags: ["Vue JS", "Google Maps", "Open Weather", "Reverse Geocode"],
+            githubLink: "https://github.com/praneethravuri/weatherly"
         };
     },
 };
@@ -92,8 +99,7 @@ export default {
 
 .heading p,
 .tags p {
-    line-height: 1.5;
-    letter-spacing: -1.5px;
+
     background: linear-gradient(to top right, $gradient-color-1, $gradient-color-2);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
