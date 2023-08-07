@@ -19,6 +19,11 @@
                 <p v-for="tag in tags" :key="tag">{{ tag }}</p>
             </div>
         </div>
+
+        <div class="linkedin-link">
+            <p>Made by <a href="https://www.linkedin.com/in/praneeth-ravuri2500/" target="_blank">Praneeth Ravuri</a></p>
+            <p class="copyright">Copyright © 2023 Praneeth Ravuri</p>
+        </div>
     </div>
 </template>
   
@@ -103,6 +108,14 @@ export default {
     background: linear-gradient(to top right, $gradient-color-1, $gradient-color-2);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+}
+
+.linkedin-link{
+    margin-top: 50px;
+
+    .copyright{
+        font-size: 1rem;
+    }
 }
 </style>
   

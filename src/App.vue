@@ -8,9 +8,6 @@
   <div class="console">
     <Console :lat="center.lat" :lng="center.lng" @update-center="updateCenter" id="console" />
   </div>
-
-  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam, excepturi.</p>
-
 </template>
   
 <script>
