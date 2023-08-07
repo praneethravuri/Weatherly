@@ -203,7 +203,16 @@ input {
     border-radius: 8px;
 }
 
-.value{
+.key,
+.value {
     text-transform: capitalize;
+    font-size: 1rem;
+    letter-spacing: -.4px;
+    line-height: 1.25rem;
+}
+
+.key {
+    color: $heading-color;
+    font-weight: 600;
 }
 </style>
