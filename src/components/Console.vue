@@ -18,18 +18,17 @@
     </div>
 
     <div v-if="weatherData">
-        <div v-for="weatherEntry in weatherData" :key="weatherEntry.id">
+        <div v-for="(weatherEntry, index) in weatherData" :key="index">
             <div class="search-result">
-                <p v-if="weatherEntry.coord">Place: {{ weatherEntry.place }}</p>
-            <p v-if="weatherEntry.coord">Longitude: {{ weatherEntry.coord.lon }}</p>
-            <p v-if="weatherEntry.coord">Longitude: {{ weatherEntry.coord.lat }}</p>
-            <br>
-            <br>
+                <div v-for="(value, key) in weatherEntry" :key="key">
+                    <p>{{ key }}: {{ value }}</p>
+                </div>
+                <br>
             </div>
         </div>
     </div>
 </template>
-  
+
 <script>
 export default {
     name: "Console",
@@ -76,18 +75,36 @@ export default {
         async getWeatherDetails(address) {
             for (const place in address) {
                 let weatherURL = `https://api.openweathermap.org/data/2.5/weather?q=${address[place]}&units=metric&appid=${this.apiKey}`;
-                console.log(weatherURL);
-
                 try {
                     const response = await fetch(weatherURL);
                     const currentPlaceData = await response.json();
-                    console.log(currentPlaceData);
+                    if (currentPlaceData.cod === 200) {
+                        console.log(JSON.stringify(currentPlaceData));
+                        const weatherEntry = {
+                            Place: address[place],
+                            latitude: currentPlaceData.coord.lat,
+                            longitude: currentPlaceData.coord.lon,
+                            weather: currentPlaceData.weather.description,
+                            temperature: currentPlaceData.main.temp,
+                            feelsLikeTemp: currentPlaceData.main.feels_like,
+                            minimumTemp: currentPlaceData.main.temp_min,
+                            maximumTemp: currentPlaceData.main.temp_max,
+                            pressure : currentPlaceData.main.pressure,
+                            humidity: currentPlaceData.main.humidity,
+                            seaLevel: currentPlaceData.main.sea_level,
+                            groundLevel: currentPlaceData.main.grnd_level,
+                            visibility: currentPlaceData.visibility,
+                            windSpeed: currentPlaceData.wind.speed,
+                            deg: currentPlaceData.wind.deg,
+                            gust: currentPlaceData.wind.gust,
+                            sunrise: currentPlaceData.sys.sunrise,
+                            sunset: currentPlaceData.sys.sunset,
 
-                    if (currentPlaceData.cod === "404") {
-                        console.log("City not found!");
+                        };
+                        console.log(JSON.stringify(weatherEntry));
+                        this.weatherData.push(weatherEntry);
                     } else {
-                        this.weatherData.push(currentPlaceData);
-                        this.weatherData.push({ place: address[place] });
+                        console.log("City not found!");
                     }
                 } catch (error) {
                     console.log(error);
@@ -97,7 +114,7 @@ export default {
     }
 }
 </script>
-  
+
 <style lang="scss" scoped>
 @import "../styles/_variables.scss";
 
@@ -132,7 +149,9 @@ input {
 }
 
 .search-result{
-    border: 2px solid $bg-color-2;
+    border: 2px solid $text-color-1;
+    margin: 10px 0px;
+    padding: 5px;
+    border-radius: 8px;
 }
 </style>
-  
