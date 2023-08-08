@@ -16,7 +16,7 @@
 
         <div class="tags">
             <div class="tags-wrapper">
-                <p v-for="tag in tags" :key="tag">{{ tag }}</p>
+                <p class="gradient-text" v-for="tag in tags" :key="tag">{{ tag }}</p>
             </div>
         </div>
     </div>
@@ -51,6 +51,13 @@ export default {
     align-items: center;
 }
 
+.heading {
+    p {
+        font-weight: 900;
+        font-size: 4.75rem;
+    }
+}
+
 .flex-center {
     display: flex;
     justify-content: center;
@@ -59,8 +66,7 @@ export default {
 }
 
 .gradient-text {
-    font-weight: 900;
-    font-size: 4.75rem;
+
     background: linear-gradient(to top right, $gradient-color-1, $gradient-color-2);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
