@@ -1,67 +1,30 @@
 <template>
-    <div class="lat-lng">
-        <form>
-            <div class="input-lat input">
-                <p>Latitude</p>
-                <input type="text" v-model="inputLat">
-            </div>
-
-            <div class="input-lng input">
-                <p>Longitude</p>
-                <input type="text" v-model="inputLng">
-            </div>
-
-            <div class="search">
-                <Button @click.prevent="reverseGeoCode" name="Search" id="search-btn" />
-            </div>
-        </form>
-    </div>
-
-    <div v-if="weatherData">
-        <div class="searches">
-            <div v-for="(weatherEntry, index) in weatherData" :key="index">
-                <div class="search-result">
-                    <p v-if="weatherEntry.Place"><span class="key">Place: </span><span class="value">{{ weatherEntry.Place
-                    }}</span></p>
-                    <p v-if="weatherEntry.latitude"><span class="key">Latitude: </span><span class="value">{{
-                        weatherEntry.latitude }}</span></p>
-                    <p v-if="weatherEntry.longitude"><span class="key">Longitude: </span><span class="value">{{
-                        weatherEntry.longitude }}</span></p>
-                    <p v-if="weatherEntry.weather"><span class="key">Weather: </span><span class="value">{{
-                        weatherEntry.weather }}</span></p>
-                    <p v-if="weatherEntry.temperature"><span class="key">Temperature: </span><span class="value">{{
-                        weatherEntry.temperature }}</span></p>
-                    <p v-if="weatherEntry.feelsLikeTemp"><span class="key">Feels Like: </span><span class="value">{{
-                        weatherEntry.feelsLikeTemp }}</span></p>
-                    <p v-if="weatherEntry.maximumTemp"><span class="key">Max Temperature: </span><span class="value">{{
-                        weatherEntry.maximumTemp }}</span>
-                    </p>
-                    <p v-if="weatherEntry.minimumTemp"><span class="key">Min Temperature: </span><span class="value">{{
-                        weatherEntry.minimumTemp }}</span>
-                    </p>
-                    <p v-if="weatherEntry.pressure"><span class="key">Pressure: </span><span class="value">{{
-                        weatherEntry.pressure }}</span></p>
-                    <p v-if="weatherEntry.humidity"><span class="key">Humidity: </span><span class="value">{{
-                        weatherEntry.humidity }}</span></p>
-                    <p v-if="weatherEntry.seaLevel"><span class="key">Sea Level: </span><span class="value">{{
-                        weatherEntry.seaLevel }}</span></p>
-                    <p v-if="weatherEntry.groundLevel"><span class="key">Ground Level: </span><span class="value">{{
-                        weatherEntry.groundLevel }}</span></p>
-                    <p v-if="weatherEntry.visibility"><span class="key">Visibility: </span><span class="value">{{
-                        weatherEntry.visibility }}</span></p>
-                    <p v-if="weatherEntry.windSpeed"><span class="key">Wind Speed: </span><span class="value">{{
-                        weatherEntry.windSpeed }}</span></p>
-                    <p v-if="weatherEntry.deg"><span class="key">Wind Deg: </span><span class="value">{{ weatherEntry.deg
-                    }}</span></p>
-                    <p v-if="weatherEntry.gust"><span class="key">Wind Gust: </span><span class="value">{{ weatherEntry.gust
-                    }}</span></p>
-                    <p v-if="weatherEntry.sunrise"><span class="key">Sunrise: </span><span class="value">{{
-                        weatherEntry.sunrise }}</span></p>
-                    <p v-if="weatherEntry.sunset"><span class="key">Sunset: </span><span class="value">{{
-                        weatherEntry.sunset }}</span></p>
+    <div class="main">
+        <div class="lat-lng">
+            <form>
+                <div class="input-lat input">
+                    <p>Latitude</p>
+                    <input type="text" v-model="inputLat">
                 </div>
-                <br>
+
+                <div class="input-lng input">
+                    <p>Longitude</p>
+                    <input type="text" v-model="inputLng">
+                </div>
+
+                <div class="search">
+                    <Button @click.prevent="reverseGeoCode" name="Search" id="search-btn" />
+                </div>
+            </form>
+        </div>
+
+        <div v-for="(weatherEntry, index) in weatherData" :key="index">
+            <div class="search-result">
+                <p v-for="(property, propIndex) in weatherEntry" :key="propIndex">
+                    <span class="key">{{ property.name }}: </span><span class="value">{{ property.value }}</span>
+                </p>
             </div>
+            <br>
         </div>
     </div>
 </template>
@@ -123,27 +86,26 @@ export default {
                     const response = await fetch(weatherURL);
                     const currentPlaceData = await response.json();
                     if (currentPlaceData.cod === 200 && !duplicateKeys.includes(address[place])) {
-                        const weatherEntry = {
-                            Place: address[place],
-                            latitude: currentPlaceData.coord.lat,
-                            longitude: currentPlaceData.coord.lon,
-                            weather: currentPlaceData.weather[0].description,
-                            temperature: currentPlaceData.main.temp,
-                            feelsLikeTemp: currentPlaceData.main.feels_like,
-                            minimumTemp: currentPlaceData.main.temp_min,
-                            maximumTemp: currentPlaceData.main.temp_max,
-                            pressure: currentPlaceData.main.pressure,
-                            humidity: currentPlaceData.main.humidity,
-                            seaLevel: currentPlaceData.main.sea_level,
-                            groundLevel: currentPlaceData.main.grnd_level,
-                            visibility: currentPlaceData.visibility,
-                            windSpeed: currentPlaceData.wind.speed,
-                            deg: currentPlaceData.wind.deg,
-                            gust: currentPlaceData.wind.gust,
-                            sunrise: currentPlaceData.sys.sunrise,
-                            sunset: currentPlaceData.sys.sunset,
-
-                        };
+                        let weatherEntry = [
+                            { name: "Place", value: address[place] },
+                            { name: "Latitude", value: currentPlaceData.coord.lat },
+                            { name: "Longitude", value: currentPlaceData.coord.lon },
+                            { name: "Clouds", value: currentPlaceData.weather[0].description },
+                            { name: "Temperature", value: currentPlaceData.main.temp },
+                            { name: "Feels Like", value: currentPlaceData.main.feels_like },
+                            { name: "Minimum Temperature", value: currentPlaceData.main.temp_min },
+                            { name: "Maximum Temperature", value: currentPlaceData.main.temp_max },
+                            { name: "Pressure", value: currentPlaceData.main.pressure },
+                            { name: "Humidity", value: currentPlaceData.main.humidity },
+                            { name: "Sea Level", value: currentPlaceData.main.sea_level },
+                            { name: "Ground Level", value: currentPlaceData.main.grnd_level },
+                            { name: "Visibility", value: currentPlaceData.main.visibility },
+                            { name: "Wind Speed", value: currentPlaceData.wind.speed },
+                            { name: "Wind Deg", value: currentPlaceData.wind.deg },
+                            { name: "Wind Gust", value: currentPlaceData.wind.gust },
+                            { name: "Sunrise", value: currentPlaceData.sys.sunrise },
+                            { name: "Sunset", value: currentPlaceData.sys.sunset },
+                        ];
                         this.weatherData.push(weatherEntry);
                         duplicateKeys.push(address[place]);
                     }
@@ -158,6 +120,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "../styles/_variables.scss";
+
 
 label {
     color: $text-color-2;
@@ -186,17 +149,6 @@ input {
     }
 }
 
-.searches {
-    margin: 10px 0px;
-    padding: 5px;
-    border-radius: 8px;
-
-    p {
-        display: flex;
-        justify-content: space-between;
-    }
-}
-
 .search-result {
     border: 2px solid $text-color-2;
     padding: 10px;
@@ -214,5 +166,9 @@ input {
 .key {
     color: $heading-color;
     font-weight: 600;
+}
+
+.main {
+    overflow-y: auto;
 }
 </style>

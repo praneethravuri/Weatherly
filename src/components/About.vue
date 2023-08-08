@@ -1,17 +1,17 @@
 <template>
     <div class="container">
-        <div class="heading align-center">
-            <p>Weatherly</p>
+        <div class="heading flex-center">
+            <p class="gradient-text">Weatherly</p>
         </div>
 
-        <div class="about align-center">
+        <div class="about flex-center">
             <p>Weatherly is a user-friendly website that seamlessly integrates with Google Maps to provide you with accurate
                 and up-to-date weather information for any location around the world</p>
         </div>
 
-        <div class="links align-center">
+        <div class="links flex-center">
             <Button name="Github" :link="githubLink" target="_blank" />
-            <Button name="Get Started" v-scroll-to="'#map'" />
+            <Button name="Get Started" v-scroll-to="'#google-map'" />
         </div>
 
         <div class="tags">
@@ -19,16 +19,10 @@
                 <p v-for="tag in tags" :key="tag">{{ tag }}</p>
             </div>
         </div>
-
-        <div class="linkedin-link">
-            <p>Made by <a href="https://www.linkedin.com/in/praneeth-ravuri2500/" target="_blank">Praneeth Ravuri</a></p>
-            <p class="copyright">Copyright © 2023 Praneeth Ravuri</p>
-        </div>
     </div>
 </template>
   
 <script>
-
 import Button from './Button.vue';
 
 export default {
@@ -57,28 +51,24 @@ export default {
     align-items: center;
 }
 
-.align-center {
+.flex-center {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 10px;
 }
 
+.gradient-text {
+    font-weight: 900;
+    font-size: 4.75rem;
+    background: linear-gradient(to top right, $gradient-color-1, $gradient-color-2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 .about {
     width: 75%;
 }
-
-.heading {
-    display: flex;
-    align-items: center;
-
-    p {
-        font-weight: 900;
-        font-size: 4.75rem;
-    }
-}
-
-
 
 .link-btn {
     margin: 10px;
@@ -102,18 +92,10 @@ export default {
     }
 }
 
-.heading p,
-.tags p {
-
-    background: linear-gradient(to top right, $gradient-color-1, $gradient-color-2);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.linkedin-link{
+.linkedin-link {
     margin-top: 50px;
 
-    .copyright{
+    .copyright {
         font-size: 1rem;
     }
 }

@@ -32,7 +32,7 @@ a {
     transition: $transition;
 
     &:hover{
-        background-color: $bg-color-3;
+        background-color: lighten($bg-color-2, 5%);
     }
 }
 </style>
