@@ -18,13 +18,15 @@
             </form>
         </div>
 
-        <div class="results" v-for="(weatherEntry, index) in weatherData" :key="index">
-            <div class="search-result">
-                <p v-for="(property, propIndex) in weatherEntry" :key="propIndex">
-                    <span class="key">{{ property.name }}: </span><span class="value">{{ property.value }}</span>
-                </p>
+        <div class="results">
+            <div v-for="(weatherEntry, index) in weatherData" :key="index">
+                <div class="search-result">
+                    <p v-for="(property, propIndex) in weatherEntry" :key="propIndex">
+                        <span class="key">{{ property.name }}: </span><span class="value">{{ property.value }}</span>
+                    </p>
+                </div>
+                <br>
             </div>
-            <br>
         </div>
     </div>
 </template>
@@ -122,10 +124,6 @@ export default {
 @import "../styles/_variables.scss";
 
 .main {
-    overflow-y: auto;
-    border: 2px solid $color-white-slate;
-    padding: 10px;
-    border-radius: 8px;
 
     .input {
         display: flex;
@@ -154,7 +152,7 @@ export default {
     }
 
     .search-result {
-        border: 2px solid $color-gray-light;
+        border: 2px solid $color-gray-dark;
         padding: 10px;
         border-radius: 8px;
         background-color: $color-black;
@@ -174,6 +172,19 @@ export default {
             line-height: 1.25rem;
         }
     }
+}
+
+.lat-lng,
+.results {
+    border: 2px solid $color-gray-dark;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.results {
+    overflow-y: auto;
+    height: 75%;
 }
 </style>
 
