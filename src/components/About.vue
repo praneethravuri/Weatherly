@@ -67,7 +67,7 @@ export default {
 
 .gradient-text {
 
-    background: linear-gradient(to top right, $color-green, $color-yellow);
+    background: linear-gradient(to top right, $color-green, $color-green-neon);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }

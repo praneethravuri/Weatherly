@@ -21,11 +21,14 @@
         <div class="results">
             <div v-if="loading" class="loader"></div>
             <div v-else>
-                <div v-for="(weatherEntry, index) in weatherData" :key="index">
+                <div v-for="(weatherEntry, index) in weatherData" :dataKey="index">
                     <div class="search-result">
-                        <p v-for="(property, propIndex) in weatherEntry" :key="propIndex">
-                            <span class="key">{{ property.name }}: </span><span class="value">{{ property.value }}</span>
-                        </p>
+                        <table>
+                            <tr v-for="(weather, index) in weatherEntry" :dataKey="index">
+                                <td v-if="weather.dataValue" class="dataKey">{{ weather.name }}</td>
+                                <td v-if="weather.dataValue" class="dataValue">{{ weather.dataValue }}</td>
+                            </tr>
+                        </table>
                     </div>
                     <br>
                 </div>
@@ -95,26 +98,27 @@ export default {
                 try {
                     const response = await fetch(weatherURL);
                     const currentPlaceData = await response.json();
+                    console.log(JSON.stringify(currentPlaceData));
                     if (currentPlaceData.cod === 200 && !duplicateKeys.includes(address[place])) {
                         let weatherEntry = [
-                            { name: "Place", value: address[place] },
-                            { name: "Latitude", value: currentPlaceData.coord.lat },
-                            { name: "Longitude", value: currentPlaceData.coord.lon },
-                            { name: "Clouds", value: currentPlaceData.weather[0].description },
-                            { name: "Temperature", value: currentPlaceData.main.temp },
-                            { name: "Feels Like", value: currentPlaceData.main.feels_like },
-                            { name: "Minimum Temperature", value: currentPlaceData.main.temp_min },
-                            { name: "Maximum Temperature", value: currentPlaceData.main.temp_max },
-                            { name: "Pressure", value: currentPlaceData.main.pressure },
-                            { name: "Humidity", value: currentPlaceData.main.humidity },
-                            { name: "Sea Level", value: currentPlaceData.main.sea_level },
-                            { name: "Ground Level", value: currentPlaceData.main.grnd_level },
-                            { name: "Visibility", value: currentPlaceData.main.visibility },
-                            { name: "Wind Speed", value: currentPlaceData.wind.speed },
-                            { name: "Wind Deg", value: currentPlaceData.wind.deg },
-                            { name: "Wind Gust", value: currentPlaceData.wind.gust },
-                            { name: "Sunrise", value: currentPlaceData.sys.sunrise },
-                            { name: "Sunset", value: currentPlaceData.sys.sunset },
+                            { name: "Place", dataValue: address[place] },
+                            { name: "Latitude", dataValue: currentPlaceData.coord.lat },
+                            { name: "Longitude", dataValue: currentPlaceData.coord.lon },
+                            { name: "Clouds", dataValue: currentPlaceData.weather[0].description },
+                            { name: "Temperature", dataValue: currentPlaceData.main.temp },
+                            { name: "Feels Like", dataValue: currentPlaceData.main.feels_like },
+                            { name: "Minimum Temperature", dataValue: currentPlaceData.main.temp_min },
+                            { name: "Maximum Temperature", dataValue: currentPlaceData.main.temp_max },
+                            { name: "Pressure", dataValue: currentPlaceData.main.pressure },
+                            { name: "Humidity", dataValue: currentPlaceData.main.humidity },
+                            { name: "Sea Level", dataValue: currentPlaceData.main.sea_level },
+                            { name: "Ground Level", dataValue: currentPlaceData.main.grnd_level },
+                            { name: "Visibility", dataValue: currentPlaceData.visibility },
+                            { name: "Wind Speed", dataValue: currentPlaceData.wind.speed },
+                            { name: "Wind Deg", dataValue: currentPlaceData.wind.deg },
+                            { name: "Wind Gust", dataValue: currentPlaceData.wind.gust },
+                            { name: "Sunrise", dataValue: currentPlaceData.sys.sunrise },
+                            { name: "Sunset", dataValue: currentPlaceData.sys.sunset },
                         ];
                         this.weatherData.push(weatherEntry);
                         duplicateKeys.push(address[place]);
@@ -134,7 +138,7 @@ export default {
 .loader {
     border: 16px solid $color-gray-dark;
     border-radius: 50%;
-    border-top: 16px solid $color-green;
+    border-top: 16px solid $color-green-neon;
     width: 120px;
     height: 120px;
     -webkit-animation: spin 2s linear infinite;
@@ -192,27 +196,6 @@ export default {
         }
     }
 
-    .search-result {
-        border: 2px solid $color-gray-dark;
-        padding: 10px;
-        border-radius: 8px;
-        background-color: $color-black;
-
-        .key {
-            color: $color-white-slate;
-            font-weight: 600;
-            font-size: 1rem;
-            letter-spacing: -.4px;
-            line-height: 1.25rem;
-        }
-
-        .value {
-            text-transform: capitalize;
-            font-size: 1rem;
-            letter-spacing: -.4px;
-            line-height: 1.25rem;
-        }
-    }
 }
 
 .lat-lng,
@@ -226,5 +209,40 @@ export default {
 .results {
     overflow-y: auto;
     height: 75%;
-}</style>
+}
+
+.search-result {
+    border: 2px solid $color-gray-dark;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: $color-black;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td {
+    padding: 5px;
+    border-bottom: 1px solid $color-gray;
+}
+
+.dataKey {
+    color: $color-white-slate;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: -.4px;
+    line-height: 1.25rem;
+    width: 40%;
+}
+
+.dataValue {
+    text-transform: capitalize;
+    font-size: 1rem;
+    letter-spacing: -.4px;
+    line-height: 1.25rem;
+    width: 60%;
+}
+</style>
 
