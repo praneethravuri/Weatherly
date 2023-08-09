@@ -24,15 +24,15 @@ export default {
 
 a {
     margin-right: 10px;
-    background-color: $color-gray-dark;
+    background-color: $bg-color-2;
     padding: 8px 18px;
     border-radius: 8px;
-    color: $color-white-slate;
+    color: $text-color-1;
     cursor: pointer;
     transition: $transition;
 
     &:hover{
-        background-color: lighten($color-gray, 5%);
+        background-color: $bg-color-3;
     }
 }
 </style>

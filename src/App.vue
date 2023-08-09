@@ -1,42 +1,71 @@
 <template>
+  <About id="about" />
 
-  <About />
+  <GoogleMap id="map" ref="mapRef" :api-key="apiKey" :language="language" :region="region" :center="center" :zoom="zoom"
+    :min-zoom="minZoom" :max-zoom="maxZoom" :street-view-control="streetViewControl" @zoom_changed="zoomChanged"
+    @click="mapClicked" />
 
-  <div class="content">
-    <Map id="google-map" @center-updated="updateCenter" />
-    <Console id="console" :lat="lat" :lng="lng" />
+  <div class="console">
+    <Console :lat="center.lat" :lng="center.lng" @update-center="updateCenter" id="console" />
   </div>
-
-  <div class="footer">
-    <Footer />
-  </div>
-
 </template>
   
 <script>
+import { ref } from 'vue';
+import { GoogleMap } from 'vue3-google-map';
 
 import Console from './components/Console.vue';
 import About from './components/About.vue';
-import Map from './components/Map.vue';
-import Footer from './components/Footer.vue';
 
 export default {
+  name: 'App',
   components: {
-    Map,
+    GoogleMap,
     Console,
-    About,
-    Footer
+    About
   },
   data() {
     return {
-      lat: 17.385044,
-      lng: 78.486671,
+      apiKey: import.meta.env.VITE_GOOGLE_MAPS_API_URL,
+      language: 'en',
+      region: 'US',
+      center: {
+        lat: 17.385044,
+        lng: 78.486671,
+      },
+      zoom: 10,
+      minZoom: 2,
+      maxZoom: null,
+      streetViewControl: false,
+      gmap: null,
+      mapRef: ref(null),
     };
   },
   methods: {
+    zoomChanged() {
+      if (this.gmap) {
+        console.log('[GMap] Zoom:', this.gmap.getZoom());
+      }
+    },
+    mapClicked(event) {
+      this.center = {
+        ...this.center,
+        lat: event.latLng.lat(),
+        lng: event.latLng.lng(),
+      };
+
+    },
+
     updateCenter(newCenter) {
-      this.lat = newCenter.lat;
-      this.lng = newCenter.lng;
+      this.center = { ...newCenter };
+    },
+  },
+  watch: {
+    '$data.mapRef?.ready'(ready) {
+      if (ready) {
+        this.gmap = this.mapRef.map;
+        console.log('[GMap] Version:', this.mapRef.api.version);
+      }
     },
   },
 };
@@ -52,20 +81,26 @@ body,
   height: 100%;
 }
 
-.content {
+body {
+  margin: 0;
+}
+
+#map {
+  width: 72%;
+  float: right;
+  margin: 10px;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.console {
+  width: 25%;
+  margin: 10px;
+  padding: 10px;
+  float: left;
+  border-radius: 8px;
   height: 100%;
-  display: flex;
-  justify-content: space-between;
-
-  #google-map {
-    flex: 4;
-    margin: 10px;
-  }
-
-  #console {
-    flex: 1;
-    margin: 10px;
-  }
+  overflow-y: auto;
 }
 </style>
   

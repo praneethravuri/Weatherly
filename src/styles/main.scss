@@ -8,8 +8,8 @@
 }
 
 body{
-    background-color: $color-black;
-    color: $color-white-slate;
+    background-color: $bg-color-1;
+    color: $text-color-1;
     font-family: 'Inter', sans-serif;
     font-weight: 400;
     font-size: 1.25rem;
@@ -17,5 +17,5 @@ body{
 }
 
 a{
-    color: $color-white-slate;
+    color: $text-color-1;
 }
