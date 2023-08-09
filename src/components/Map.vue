@@ -1,23 +1,19 @@
 <template>
-    <GoogleMap id="map" ref="mapRef" :api-key="apiKey" :language="language" :region="region" :center="center" :zoom="zoom"
-        :min-zoom="minZoom" :max-zoom="maxZoom" :street-view-control="streetViewControl" @zoom_changed="zoomChanged"
-        @click="mapClicked" />
+    <GoogleMap id="map" ref="mapRef" :api-key="apiKey" :language="language" :region="region" :center="center"
+        :zoom="zoom" :min-zoom="minZoom" :max-zoom="maxZoom" :street-view-control="streetViewControl"
+        @zoom_changed="zoomChanged" @click="mapClicked"  />
+        
 </template>
     
 <script>
-
-import { GoogleMap } from 'vue3-google-map';
+import { GoogleMap, Marker } from 'vue3-google-map';
 import { ref } from 'vue';
-import Console from './Console.vue';
-import About from './About.vue';
 
 export default {
     name: 'App',
     components: {
         GoogleMap,
-        Console,
-        About,
-        Map
+        Marker
     },
     data() {
         return {
@@ -34,6 +30,11 @@ export default {
             streetViewControl: false,
             gmap: null,
             mapRef: ref(null),
+            markerOptions: {
+                position: this.center,
+                label: 'M',
+                title: "Marker Title",
+            }
         };
     },
     methods: {
@@ -49,10 +50,6 @@ export default {
                 lng: event.latLng.lng(),
             };
             this.$emit('center-updated', this.center);
-
-        },
-        updateCenter(newCenter) {
-            this.center = { ...newCenter };
         },
     },
     watch: {
@@ -64,7 +61,6 @@ export default {
         },
     },
 };
-
 </script>
     
 <style lang="scss">
