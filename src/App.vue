@@ -58,12 +58,12 @@ body,
   justify-content: space-between;
 
   #google-map {
-    width: 70%;
+    flex: 4;
     margin: 10px;
   }
 
   #console {
-    width: 30%;
+    flex: 1;
     margin: 10px;
   }
 }

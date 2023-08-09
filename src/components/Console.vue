@@ -18,7 +18,7 @@
             </form>
         </div>
 
-        <div v-for="(weatherEntry, index) in weatherData" :key="index">
+        <div class="results" v-for="(weatherEntry, index) in weatherData" :key="index">
             <div class="search-result">
                 <p v-for="(property, propIndex) in weatherEntry" :key="propIndex">
                     <span class="key">{{ property.name }}: </span><span class="value">{{ property.value }}</span>
@@ -121,54 +121,59 @@ export default {
 <style lang="scss" scoped>
 @import "../styles/_variables.scss";
 
-
-label {
-    color: $text-color-2;
-}
-
-input {
-    background-color: $bg-color-2;
-    border: none;
-    border-radius: 5px;
-    color: $text-color-2;
-    padding: 5px;
-}
-
-.input {
-    display: flex;
-    justify-content: space-between;
-    margin: 10px 0px;
-}
-
-
-.search {
-    margin: 20px 0px;
-
-    &-btn {
-        margin: 0;
-    }
-}
-
-.search-result {
-    border: 2px solid $text-color-2;
-    padding: 10px;
-    border-radius: 8px;
-}
-
-.key,
-.value {
-    text-transform: capitalize;
-    font-size: 1rem;
-    letter-spacing: -.4px;
-    line-height: 1.25rem;
-}
-
-.key {
-    color: $heading-color;
-    font-weight: 600;
-}
-
 .main {
     overflow-y: auto;
+    border: 2px solid $color-white-slate;
+    padding: 10px;
+    border-radius: 8px;
+
+    .input {
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 0;
+
+        p {
+            color: $color-white-slate;
+        }
+
+        input {
+            background-color: $color-gray;
+            border: none;
+            border-radius: 5px;
+            color: $color-white-slate;
+            padding: 5px;
+        }
+    }
+
+    .search {
+        margin: 20px 0;
+
+        &-btn {
+            margin: 0;
+        }
+    }
+
+    .search-result {
+        border: 2px solid $color-gray-light;
+        padding: 10px;
+        border-radius: 8px;
+        background-color: $color-black;
+
+        .key {
+            color: $color-white-slate;
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: -.4px;
+            line-height: 1.25rem;
+        }
+
+        .value {
+            text-transform: capitalize;
+            font-size: 1rem;
+            letter-spacing: -.4px;
+            line-height: 1.25rem;
+        }
+    }
 }
 </style>
+

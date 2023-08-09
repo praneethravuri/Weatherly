@@ -67,7 +67,7 @@ export default {
 
 .gradient-text {
 
-    background: linear-gradient(to top right, $gradient-color-1, $gradient-color-2);
+    background: linear-gradient(to top right, $color-green, $color-yellow);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -78,7 +78,7 @@ export default {
 
 .link-btn {
     margin: 10px;
-    background-color: $bg-color-2;
+    background-color: $color-gray-light;
     padding: 8px 18px;
     border-radius: 8px;
 }
