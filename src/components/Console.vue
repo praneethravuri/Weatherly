@@ -19,13 +19,16 @@
         </div>
 
         <div class="results">
-            <div v-for="(weatherEntry, index) in weatherData" :key="index">
-                <div class="search-result">
-                    <p v-for="(property, propIndex) in weatherEntry" :key="propIndex">
-                        <span class="key">{{ property.name }}: </span><span class="value">{{ property.value }}</span>
-                    </p>
+            <div v-if="loading" class="loader"></div>
+            <div v-else>
+                <div v-for="(weatherEntry, index) in weatherData" :key="index">
+                    <div class="search-result">
+                        <p v-for="(property, propIndex) in weatherEntry" :key="propIndex">
+                            <span class="key">{{ property.name }}: </span><span class="value">{{ property.value }}</span>
+                        </p>
+                    </div>
+                    <br>
                 </div>
-                <br>
             </div>
         </div>
     </div>
@@ -51,6 +54,7 @@ export default {
             addressData: '',
             weatherData: [],
             apiKey: import.meta.env.VITE_OPEN_WEATHER_API_URL,
+            loading: false,
         };
     },
     watch: {
@@ -60,6 +64,7 @@ export default {
     methods: {
         async reverseGeoCode() {
             this.weatherData = [];
+            this.loading = true;
             const geoCodeURL = `https://geocode.maps.co/reverse?lat=${this.inputLat}&lon=${this.inputLng}`;
 
             try {
@@ -73,6 +78,9 @@ export default {
                 }
             } catch (error) {
                 console.log(error);
+            }
+            finally {
+                this.loading = false;
             }
         },
 
@@ -122,6 +130,39 @@ export default {
 
 <style lang="scss" scoped>
 @import "../styles/_variables.scss";
+
+.loader {
+    border: 16px solid $color-gray-dark;
+    border-radius: 50%;
+    border-top: 16px solid $color-green;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+    margin: 50% auto;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 
 .main {
 
@@ -185,6 +226,5 @@ export default {
 .results {
     overflow-y: auto;
     height: 75%;
-}
-</style>
+}</style>
 
