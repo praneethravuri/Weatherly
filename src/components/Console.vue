@@ -1,19 +1,19 @@
 <template>
     <div class="main">
-        <div class="lat-lng">
+        <div class="coordinates">
             <form>
-                <div class="input-lat input">
+                <div class="showValue">
                     <p>Latitude</p>
                     <input type="text" v-model="inputLat">
                 </div>
 
-                <div class="input-lng input">
+                <div class="showValue">
                     <p>Longitude</p>
                     <input type="text" v-model="inputLng">
                 </div>
 
-                <div class="search">
-                    <Button @click.prevent="reverseGeoCode" name="Search" id="search-btn" />
+                <div class="search-btn">
+                    <Button @click.prevent="reverseGeoCode" name="Search" />
                 </div>
             </form>
         </div>
@@ -21,16 +21,18 @@
         <div class="results">
             <div v-if="loading" class="loader"></div>
             <div v-else>
-                <div v-for="(weatherEntry, index) in weatherData" :dataKey="index">
-                    <div class="search-result">
+                <div class="search-results">
+                    <div v-for="(weatherEntry, index) in weatherData" :dataKey="index">
                         <table>
                             <tr v-for="(weather, index) in weatherEntry" :dataKey="index">
                                 <td v-if="weather.dataValue" class="dataKey">{{ weather.name }}</td>
-                                <td v-if="weather.dataValue" class="dataValue">{{ weather.dataValue }}</td>
+                                <td v-if="weather.dataValue && weather.unitValue" class="dataValue">{{ weather.dataValue }}
+                                    {{ weather.unitValue }}</td>
+                                <td v-else-if="weather.dataValue" class="dataValue">{{ weather.dataValue }}</td>
                             </tr>
                         </table>
+                        <br>
                     </div>
-                    <br>
                 </div>
             </div>
         </div>
@@ -105,20 +107,20 @@ export default {
                             { name: "Latitude", dataValue: currentPlaceData.coord.lat },
                             { name: "Longitude", dataValue: currentPlaceData.coord.lon },
                             { name: "Clouds", dataValue: currentPlaceData.weather[0].description },
-                            { name: "Temperature", dataValue: currentPlaceData.main.temp },
-                            { name: "Feels Like", dataValue: currentPlaceData.main.feels_like },
-                            { name: "Minimum Temperature", dataValue: currentPlaceData.main.temp_min },
-                            { name: "Maximum Temperature", dataValue: currentPlaceData.main.temp_max },
-                            { name: "Pressure", dataValue: currentPlaceData.main.pressure },
-                            { name: "Humidity", dataValue: currentPlaceData.main.humidity },
-                            { name: "Sea Level", dataValue: currentPlaceData.main.sea_level },
-                            { name: "Ground Level", dataValue: currentPlaceData.main.grnd_level },
-                            { name: "Visibility", dataValue: currentPlaceData.visibility },
-                            { name: "Wind Speed", dataValue: currentPlaceData.wind.speed },
-                            { name: "Wind Deg", dataValue: currentPlaceData.wind.deg },
-                            { name: "Wind Gust", dataValue: currentPlaceData.wind.gust },
-                            { name: "Sunrise", dataValue: currentPlaceData.sys.sunrise },
-                            { name: "Sunset", dataValue: currentPlaceData.sys.sunset },
+                            { name: "Temperature", dataValue: currentPlaceData.main.temp, unitValue: "℃" },
+                            { name: "Feels Like", dataValue: currentPlaceData.main.feels_like, unitValue: "℃" },
+                            { name: "Minimum Temperature", dataValue: currentPlaceData.main.temp_min, unitValue: "℃" },
+                            { name: "Maximum Temperature", dataValue: currentPlaceData.main.temp_max, unitValue: "℃" },
+                            { name: "Pressure", dataValue: currentPlaceData.main.pressure, unitValue: "hPa" },
+                            { name: "Humidity", dataValue: currentPlaceData.main.humidity, unitValue: "%" },
+                            { name: "Sea Level", dataValue: currentPlaceData.main.sea_level, unitValue: "hPa" },
+                            { name: "Ground Level", dataValue: currentPlaceData.main.grnd_level, unitValue: "hPa" },
+                            { name: "Visibility", dataValue: currentPlaceData.visibility, unitValue: "meters" },
+                            { name: "Wind Speed", dataValue: currentPlaceData.wind.speed, unitValue: "m/s" },
+                            { name: "Wind Deg", dataValue: currentPlaceData.wind.deg, unitValue: "°" },
+                            { name: "Wind Gust", dataValue: currentPlaceData.wind.gust, unitValue: "m/s" },
+                            { name: "Sunrise", dataValue: currentPlaceData.sys.sunrise, unitValue: "" },
+                            { name: "Sunset", dataValue: currentPlaceData.sys.sunset, unitValue: "" },
                         ];
                         this.weatherData.push(weatherEntry);
                         duplicateKeys.push(address[place]);
@@ -170,7 +172,7 @@ export default {
 
 .main {
 
-    .input {
+    .showValue {
         display: flex;
         justify-content: space-between;
         margin: 10px 0;
@@ -179,7 +181,7 @@ export default {
             color: $color-white-slate;
         }
 
-        input {
+        input[type="text"] {
             background-color: $color-gray;
             border: none;
             border-radius: 5px;
@@ -188,17 +190,13 @@ export default {
         }
     }
 
-    .search {
+    .search-btn {
         margin: 20px 0;
-
-        &-btn {
-            margin: 0;
-        }
     }
 
 }
 
-.lat-lng,
+.coordinates,
 .results {
     border: 2px solid $color-gray-dark;
     padding: 10px;
@@ -209,13 +207,24 @@ export default {
 .results {
     overflow-y: auto;
     height: 75%;
+
+    @media only screen and (max-width: 800px) {
+        height: calc(100% - 20px);
+        /* Adjust the height to accommodate the scrollbar */
+    }
 }
 
+
 .search-result {
-    border: 2px solid $color-gray-dark;
+    border: 2px solid $color-white-slate;
     padding: 10px;
     border-radius: 8px;
     background-color: $color-black;
+    margin: 0px 0px 20px 0px;
+
+    div{
+        border: 2px solid red;
+    }
 }
 
 table {
@@ -235,6 +244,14 @@ td {
     letter-spacing: -.4px;
     line-height: 1.25rem;
     width: 40%;
+}
+
+.dataValue {
+    text-transform: capitalize;
+    font-size: 1rem;
+    letter-spacing: -.4px;
+    line-height: 1.25rem;
+    width: 60%;
 }
 
 .dataValue {

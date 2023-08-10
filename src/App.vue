@@ -67,5 +67,21 @@ body,
     margin: 10px;
   }
 }
+
+@media only screen and (max-width: 800px) {
+  .content{
+    display: block;
+    height: 100%;
+  }
+
+  #google-map {
+    height: 50%;
+  }
+
+  #console {
+    flex: 1;
+    margin: 10px;
+  }
+}
 </style>
   
