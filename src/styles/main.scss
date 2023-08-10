@@ -1,13 +1,13 @@
 @import "./_variables";
 
-*{
+* {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
     text-decoration: none;
 }
 
-body{
+body {
     background-color: $color-black;
     color: $color-white-slate;
     font-family: 'Inter', sans-serif;
@@ -16,6 +16,25 @@ body{
     letter-spacing: 0.2px;
 }
 
-a{
+a {
     color: $color-white-slate;
+}
+
+p {
+    font-size: 1.25rem;
+    font-size: 400;
+    letter-spacing: 0.2px;
+    color: $color-white-slate;
+}
+
+.gradient-text {
+    background: linear-gradient(to top right, $color-green, $color-green-neon);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+@media only screen and (max-width: 600px) {
+    p {
+        font-size: 1rem;
+    }
 }

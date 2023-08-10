@@ -1,15 +1,13 @@
 <template>
     <div class="container">
-        <div class="heading flex-center">
-            <p class="gradient-text">Weatherly</p>
-        </div>
-
-        <div class="about flex-center">
-            <p>Weatherly is a user-friendly website that seamlessly integrates with Google Maps to provide you with accurate
+        <div class="heading">
+            <h1 class="gradient-text">Weatherly</h1>
+            <p class="tagline">Weatherly is a user-friendly website that seamlessly integrates with Google Maps to provide
+                you with accurate
                 and up-to-date weather information for any location around the world</p>
         </div>
 
-        <div class="links flex-center">
+        <div>
             <Button name="Github" :link="githubLink" target="_blank" />
             <Button name="Get Started" v-scroll-to="'#google-map'" />
         </div>
@@ -19,14 +17,16 @@
                 <p class="gradient-text" v-for="tag in tags" :key="tag">{{ tag }}</p>
             </div>
         </div>
+
     </div>
 </template>
-  
+
 <script>
+
 import Button from './Button.vue';
 
 export default {
-    name: "About",
+    name: 'About',
     components: {
         Button
     },
@@ -36,74 +36,79 @@ export default {
             githubLink: "https://github.com/praneethravuri/weatherly"
         };
     },
-};
-</script>
-  
-<style lang="scss" scoped>
-@import "../styles/_variables.scss";
+}
 
+</script>
+
+<style lang="scss" scoped>
 .container {
-    height: 100vh;
     text-align: center;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    div {
+        margin: 15px 0px;
+    }
 }
 
 .heading {
-    p {
-        font-weight: 900;
-        font-size: 4.75rem;
+
+    width: 80%;
+    margin: auto;
+
+    h1 {
+        font-size: 4.5rem;
     }
 }
 
-.flex-center {
+.tags-wrapper {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px;
-}
-
-.gradient-text {
-
-    background: linear-gradient(to top right, $color-green, $color-green-neon);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.about {
-    width: 75%;
-}
-
-.link-btn {
-    margin: 10px;
-    background-color: $color-gray-light;
-    padding: 8px 18px;
-    border-radius: 8px;
-}
-
-.tags {
-    margin-top: 10px;
-
-    &-wrapper {
-        display: flex;
-    }
 
     p {
-        margin: 10px 20px;
-        line-height: 1.5;
-        letter-spacing: -1.5px;
-        font-weight: 600;
+        margin: 10px;
     }
 }
 
-.linkedin-link {
-    margin-top: 50px;
+@media only screen and (max-width: 600px) {
+    .container {
+        height: 50vh;
+    }
 
-    .copyright {
-        font-size: 1rem;
+    .heading {
+        h1 {
+            font-size: 3rem;
+        }
     }
 }
+
+@media only screen and (max-width: 320px){
+    .container{
+        height: 75vh;
+    }
+
+}
+
+@media only screen and (max-width: 380px){
+    .container{
+        height: 75vh;
+    }
+
+}
+
+@media only screen and (min-width: 381px) and (max-width: 599px){
+    .container{
+        height: 75vh;
+    }
+
+}
+
+@media only screen and (max-width: 800px) {
+    .container{
+        height: 40vh;
+    }
+}
+
 </style>
-  
