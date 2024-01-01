@@ -38,7 +38,13 @@ export default {
       this.lat = newCenter.lat;
       this.lng = newCenter.lng;
     },
+    showUnavailablePopUp(){
+      alert("Sorry, this website is currently not accepting new requests. Please email me at pravdev10@gmail.com to enable the API key");
+    }
   },
+  mounted(){
+    this.showUnavailablePopUp();
+  }
 };
 </script>
   
