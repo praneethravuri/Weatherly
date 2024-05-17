@@ -1,17 +1,10 @@
 # Weatherly - Real-time Local Weather Application
 
-<p align="center">
-  <a href="https://app.netlify.com/sites/weatherlycloud/deploys">
-    <img src="https://api.netlify.com/api/v1/badges/edcbf58e-e995-4511-ab45-e6542374a232/deploy-status" />
-  </a>
-</p>
-
 <h3 align="center">
 <img alt="Alt text" src="https://img.shields.io/badge/Vue.js-4FC08D.svg?style=for-the-badge&logo=vuedotjs&logoColor=white"/>
 <img alt="Alt text" src="https://img.shields.io/badge/Sass-CC6699.svg?style=for-the-badge&logo=Sass&logoColor=white"/>
 <img alt="Alt text" src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=for-the-badge&logo=JavaScript&logoColor=black"/>
 <img alt="Alt text" src="https://img.shields.io/badge/GoogleCloud-%234285F4.svg?style=for-the-badge&logo=google-cloud&logoColor=white"/>
-<img alt="Alt text" src="https://img.shields.io/badge/netlify-%23000000.svg?style=for-the-badge&logo=netlify&logoColor=#00C7B7"/>
 
 </h3>
 
